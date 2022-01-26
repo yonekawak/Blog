@@ -9,17 +9,17 @@ class PostController extends Controller
 {
     public function index(Post $post)
     {
-        return view('index')->with(['posts' => $post->getPaginateByLimit()]);
+        return view('posts/index')->with(['posts' => $post->getPaginateByLimit()]);
     } 
 
     public function show(Post $post)
         {
-            return view('show')->with(['post' => $post]);
+            return view('posts/show')->with(['post' => $post]);
         }
 
     public function create()
     {
-        return view('create');
+        return view('posts/create');
     }
     
     public function store(Post $post, PostRequest $request)
@@ -31,7 +31,7 @@ class PostController extends Controller
     
     public function edit(Post $post)
     {
-        return view('edit')->with(['post' => $post]);
+        return view('posts/edit')->with(['post' => $post]);
     }
     
     public function update(PostRequest $request, Post $post)
@@ -39,6 +39,12 @@ class PostController extends Controller
         $input_post = $request['post'];
         $post->fill($input_post)->save();
         return redirect('/posts/' . $post->id);
+    }
+    
+    public function delete(Post $post)
+    {
+        $post->delete();
+        return redirect('/');
     }
 
 }
